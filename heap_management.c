@@ -41,7 +41,7 @@ free_node* initilise_heap(free_node* free_lptr)         //it initilises heap as 
 
 heap_node* sort_heap_list(heap_node* heap_lptr)       //sorts heap list according to start address
 {
-    heap_node *ifptr=heap_lptr;
+    heap_node *ifptr=heap_lptr;            //bubble sort
     while(ifptr!=NULL)
     {
         heap_node *jfptr=ifptr;
@@ -181,7 +181,7 @@ heap_node* insert_in_heap_with_first_allocation(free_node** free_ptr, heap_node*
 
             new_node->next=heap_lptr;
             new_node->prev=NULL;
-            if(heap_lptr!=NULL)
+            if(heap_lptr!=NULL)  //as it is ddl we will first set prev(if heap list has atleast one node)
             {
                 heap_lptr->prev=new_node;
             }
@@ -190,8 +190,8 @@ heap_node* insert_in_heap_with_first_allocation(free_node** free_ptr, heap_node*
             // *free_ptr=free_lptr;
             insert=1;
         }
-        else if(free_lptr!=NULL)  //if no above conditions satisfy, move by one step
-        {
+        else if(free_lptr!=NULL)  //if no above conditions satisfy, move by one step in free list, this is because if free list gets divided 
+        {                         // into blocks then it checks with that current block if not moves into next block
             free_lptr=free_lptr->next;
         }
     }
@@ -270,7 +270,7 @@ heap_node* insert_in_heap_with_best_fit_allocation(free_node** free_ptr, heap_no
         }
         else if((size<free_lptr->free_size)&&(free_lptr->free_size<=min_size))
         {
-            min_size=free_lptr->free_size;   //we sore minimum size and its pointer
+            min_size=free_lptr->free_size;   //we store minimum size and its pointer
             min_fptr=free_lptr;
             if(free_lptr!=NULL)
             {
